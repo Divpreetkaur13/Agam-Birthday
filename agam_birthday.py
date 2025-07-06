@@ -36,35 +36,34 @@ def autoplay_audio(file_path: str):
         """
         st.markdown(audio_html, unsafe_allow_html=True)
 
-# Typing animation effect
+# Typewriter message
 def typewriter_effect(text):
     container = st.empty()
     full_text = ""
     for char in text:
         full_text += char
-        container.markdown(
-            f"""
-            <div style='
-                font-family: "Courier New", monospace;
-                font-size: 22px;
-                font-weight: bold;
-                color: white;
-                text-align: center;
-                text-shadow: 1px 1px 5px black;
-                background-color: rgba(0, 0, 0, 0.4);
-                padding: 20px;
-                border-radius: 10px;
-                margin-top: -420px;
-                margin-left: auto;
-                margin-right: auto;
-                width: 85%;
-            '>
-            {full_text}
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        time.sleep(0.03)  # Adjust typing speed here
+        text_with_breaks = full_text.replace('\\n', '<br>').replace('\n', '<br>')
+        rendered_html = f"""
+        <div style='
+            font-family: "Courier New", monospace;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 5px black;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: -420px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 85%;
+        '>
+        {text_with_breaks}
+        </div>
+        """
+        container.markdown(rendered_html, unsafe_allow_html=True)
+        time.sleep(0.03)
 
 # Set background
 set_bg("image.jpg")
@@ -73,14 +72,14 @@ set_bg("image.jpg")
 if "step" not in st.session_state:
     st.session_state.step = 0
 
-# 🎉 Step 0: Click for Surprise
+# Step 0: Click for Surprise
 if st.session_state.step == 0:
     st.markdown("<h1 style='text-align: center; color: white;'>🎉 Click for Surprise 🎉</h1>", unsafe_allow_html=True)
     if st.button("Click for Surprise"):
         st.session_state.step = 1
         st.rerun()
 
-# 📸 Step 1: Show photo + big heading + audio
+# Step 1: Show photo + heading + audio
 elif st.session_state.step == 1:
     st.image("agam.jpeg", use_container_width=True)
     st.markdown("""
@@ -96,26 +95,27 @@ elif st.session_state.step == 1:
             🎾 Happy Birthday Agam! 🎾
         </h1>
     """, unsafe_allow_html=True)
-    autoplay_audio("C:/Users/admin/Desktop/Agam_Birthday/birthdaysong.mp3")
+    autoplay_audio("birthdaysong.mp3")
     if st.button("Next"):
         st.session_state.step = 2
         st.rerun()
 
-# 💌 Step 2: Message on image with typewriter effect
+# Step 2: Message on image + audio
 elif st.session_state.step == 2:
     st.image("message.png", use_container_width=True)
-    autoplay_audio("C:/Users/admin/Desktop/Agam_Birthday/birthdaysong.mp3")
+    autoplay_audio("birthdaysong.mp3")
 
     birthday_message = """
 Dear Agam,
 
-Today, the court of life celebrates a true champion — YOU. 🏆
-Your strength, discipline, and passion for tennis inspire us all.
-Just like your killer serves and unstoppable forehands,
-may this year bring victories, joy, and endless love.
+Today, the court of life celebrates a true champion — YOU. 🏆  
+Your strength, discipline, and passion for tennis inspire us all.  
+Just like your killer serves and unstoppable forehands,  
+may this year bring victories, joy, and endless love.  
 
-Keep swinging for the stars, chasing every dream, and living with purpose.
+Keep swinging for the stars, chasing every dream, and living with purpose.  
 
-🎾 You’re not just an amazing brother, but a born winner. Happy Birthday! 🎉
+🎾 You’re not just an amazing brother, but a born winner.  
+Happy Birthday, Champ! 🎉
     """
     typewriter_effect(birthday_message)
